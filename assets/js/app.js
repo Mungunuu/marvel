@@ -76,6 +76,23 @@ function displayRecentSearches(searchArray) {
 };
 
 function getMarvelResponse(characterName) {
+  // clear image div
+  $("#posterImage").empty();
+  // clear character info div
+  $("#charInfo").empty();
+
+  //add loading img to div
+  var img = $("<img>");
+  img.attr("src", "assets/images/spinner.gif");
+  img.addClass("imgLoad");
+
+  var img1 = $("<img>");
+  img1.attr("src", "assets/images/spinner.gif");
+  img1.addClass("imgLoad");
+
+  $("#posterImage").append(img);
+  $("#charInfo").append(img1);
+
   // you need a new ts every request                                                                                    
   var ts = new Date().getTime();
   //creates the hash

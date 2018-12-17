@@ -147,6 +147,11 @@ img {
     height: auto;
 }
 
+.imgLoad {
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .overlay {
     position: absolute;
     top: 0;
