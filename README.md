@@ -3,8 +3,10 @@
 # MARVEL API
 https://developer.marvel.com/docs#!/public/getCreatorCollection_get_0
 * grab picture of character
-* grab biography
-* grab (20) relevant comics
+* grab character name
+* grab description
+* grab # of available comics
+* grab link to character comics
 
 # TMDB API
 https://developers.themoviedb.org/3/search/search-movies
