@@ -27,3 +27,10 @@ https://developers.themoviedb.org/3/search/search-movies
 # JS FOLDER
 * app.js is OUR personal file to run all of our scripts
 * i am not 100% sure what the files inside the VENDOR folder do or what they are for but I am leaving them alone in case they affect how our page runs since we are using this framework
+
+# THINGS TO WORK ON
+* adding a loading bar or gif to the image div and the character info div for the lag time while the ajax request to the api is loading
+* * any time the user presses the submit button, show loading gifs so that the user understands the process is occuring while they wait
+* putting recent searches into local storage
+* perhaps using the superhero api to get powerstats and character height/weight and display in the character info div
+* adding whatever new technology we decide on 
