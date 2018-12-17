@@ -1,5 +1,7 @@
 # MARVEL GROUP PROJECT 
 
+deployed link: https://klynne23.github.io/marvel/
+
 # MARVEL API
 https://developer.marvel.com/docs#!/public/getCreatorCollection_get_0
 * grab picture of character
