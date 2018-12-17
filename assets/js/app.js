@@ -83,11 +83,11 @@ function getMarvelResponse(characterName) {
 
   //add loading img to div
   var img = $("<img>");
-  img.attr("src", "assets/images/spinner.gif");
+  img.attr("src", "assets/images/loading.svg");
   img.addClass("imgLoad");
 
   var img1 = $("<img>");
-  img1.attr("src", "assets/images/spinner.gif");
+  img1.attr("src", "assets/images/loading.svg");
   img1.addClass("imgLoad");
 
   $("#posterImage").append(img);
