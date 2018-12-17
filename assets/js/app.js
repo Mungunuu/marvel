@@ -81,7 +81,7 @@ function getMarvelResponse(characterName) {
   //creates the hash
   var hash = CryptoJS.MD5(ts + "64db9fdab53906ac65de6ccadc60239d59f68cc1" + "3037032bf180053850405c0db9a5a3ce").toString();
   var superHeroObject;
-  var url = 'http://gateway.marvel.com:80/v1/public/characters';
+  var url = 'https://cors-anywhere.herokuapp.com/http://gateway.marvel.com:80/v1/public/characters';
 
   $.ajax({
     url: url,
