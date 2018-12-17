@@ -1,0 +1,197 @@
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+main {
+    /* background image source:https://imgur.com/gallery/BdXdK */
+    background-image: url(../images/marvelbg.jpg);
+    background-size: cover;
+    background-position: center;
+    z-index: -10;
+    background-position-y: bottom;
+}
+
+.wrapper {
+    min-height: 100%;
+    margin-bottom: -50px;
+}
+
+.top-bar, .top-bar ul{
+    background-color: black;
+}
+
+.menu li p {
+    width: 290px;
+    padding-top: 1%;
+    margin-bottom: -16px;
+    font-size: 1.3em;
+    color: white;
+}
+
+.menu form {
+    display: inherit;
+}
+
+#submit-button {
+    margin-top: 10px;
+}
+
+.top-bar input {
+    max-width: 250px;
+    margin-right: 4.5rem;
+}
+
+#submit-button {
+    color: white;
+    background-color: black;
+    border-color: white;
+    border-radius: 10px;
+}
+
+#submit-button:hover {
+    box-shadow: 0px 0px 20px white;
+}
+
+.button.hollow:hover, .button.hollow:focus {
+    color: white;
+    border-color: white;
+}
+
+.pageContent {
+    width: 100%;
+    /* min-height: 625px; */
+    /* border: 1px solid blue; */
+    padding-top: 1%;
+    
+    /* background-position-y: 85%;  */
+    /* background-image: linear-gradient(#8E0E00, rgb(0, 0, 0)); */
+}
+
+.contentContainer p, li {
+    color: white;
+}
+
+/* keeps all content divs at same min height as image */
+#charInfo {
+    min-height: 330px;
+    
+}
+
+#charInfo h1 {
+    color: white;
+    text-align: center;
+    margin-bottom: -8px;
+}
+
+/* DO NOT CHANGE */
+.hr-text {
+    line-height: 0em;
+    position: relative;
+    outline: 0;
+    border: 0;
+    color: black;
+    text-align: center;
+    height: 1.5em;
+    margin-bottom: -15px;
+}
+
+/* DO NOT CHANGE */
+.hr-text:before {
+    content: '';
+    background: white;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 1px;
+}
+
+/* DO NOT CHANGE */
+.hr-text:after {
+    content: attr(data-content);
+    position: relative;
+    display: inline-block;
+    color: white;
+}
+
+/* keeps all content divs at same min height as image */
+#recentSearches.callout {
+    min-height: 330px;
+}
+
+#recentSearches h4 {
+    color: white;
+    text-align: center;
+    margin-bottom: -8px;
+}
+
+#recentSearches p {
+    font-size: 1.25em;
+}
+
+#hrDivider {
+    visibility: hidden;
+    margin-bottom: 2%;
+}
+
+.moviePoster {
+    position: relative;
+}
+
+img {
+    display: block;
+    height: auto;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: auto;
+    opacity: 0;
+    transition: .5s ease;
+    overflow: scroll;
+    text-overflow: ellipsis;
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+.moviePoster:hover .overlay {
+    opacity: 1;
+}
+
+.text {
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+    max-height: 500px;
+    padding-top: 5px;
+}
+
+.callout > :last-child {
+    margin-bottom: 16px;
+}
+  
+/* DO NOT CHANGE */
+.footer, .push {
+    height: 50px;
+}
+
+/* DO NOT CHANGE */
+.footer {
+    background-color: black;
+    text-align: center;
+    color: white;
+    padding-top: 15px;
+}
+
