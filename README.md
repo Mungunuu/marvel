@@ -5,7 +5,6 @@ https://developer.marvel.com/docs#!/public/getCreatorCollection_get_0
 * grab picture of character
 * grab biography
 * grab (20) relevant comics
-*
 
 # TMDB API
 https://developers.themoviedb.org/3/search/search-movies
@@ -30,7 +29,7 @@ https://developers.themoviedb.org/3/search/search-movies
 
 # THINGS TO WORK ON
 * adding a loading bar or gif to the image div and the character info div for the lag time while the ajax request to the api is loading
-* * any time the user presses the submit button, show loading gifs so that the user understands the process is occuring while they wait
+    * any time the user presses the submit button, show loading gifs so that the user understands the process is occuring while they wait
 * putting recent searches into local storage
 * perhaps using the superhero api to get powerstats and character height/weight and display in the character info div
 * adding whatever new technology we decide on 
