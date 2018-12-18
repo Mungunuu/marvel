@@ -1,7 +1,7 @@
 // array to hold the 5 most recent searches
 var recentSearches = [];
 // this array is for me to log the charcter names that have the best results
-var marvelSearches = ["Wolverine", "Spider-Man", "Thor", "Hulk", "Iron Man", "Black Widow", "Captain America", "Guardians of the Galaxy", "Vision", "Black Panther"];
+var marvelSearches = ["Wolverine", "Spider-Man", "Iron Man","Thor", "Hulk", "Iron Man", "Black Widow", "Captain America", "Guardians of the Galaxy", "Vision", "Black Panther"];
 // this array is just for me to put  issues we should try to account for
 var marvelIssues = [{
   Vision: "returns character info and poster from marvel, movies are completely unrelated",

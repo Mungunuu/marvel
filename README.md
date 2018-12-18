@@ -39,5 +39,10 @@ https://developers.themoviedb.org/3/search/search-movies
     * Jared provided solution, look at the Marvel ajax URL, we are routing our request through a "middle-man" heroku who will add the required 's' to our URL and allow the content to work on GitHub
     
 **LESS IMPORTANT**   
+* figure out .then() function so that we can execute the functions and display data in a specific order
+    1. send userinput to marvel api and do error checking
+        * we would send to the superhero api after to get powerstats, weight etc
+    2. if user input is "correct" send to tmdb api and get movie responses
+    3. display data in the order it is requested
 * putting recent searches into local storage
 * perhaps using the superhero api to get powerstats and character height/weight and display in the character info div
