@@ -147,6 +147,9 @@ function getMarvelResponse(characterName) {
       /******** PATRICK CODING EVERYTHING IN THIS ELSE IF  */
       // if results = 1 {
         // set superHeroObject = response.results
+
+        // make sure we are passing the correct variable to ensure best film return results from tmdb
+        //getTMDbResponse(superHeroObject.name);
         //generateDivs(superHeroObject);
     // }
 
@@ -155,6 +158,9 @@ function getMarvelResponse(characterName) {
         // display clickable div with list of results/choices
         // once user clicks choice, 
         // set var = to user choice
+
+        // make sure we are passing the correct variable to ensure best film return results from tmdb
+      //getTMDbResponse(superHeroObject.name);
         //generateDivs(superHeroObject);
       // }
 
@@ -182,7 +188,8 @@ function getMarvelResponse(characterName) {
   }).then(function (response) {
     
     if (flag != 0 ) {
-      getTMDbResponse(superHeroObject.name);
+      // make sure we are passing the correct variable to ensure best film return results from tmdb
+      //getTMDbResponse(superHeroObject.name);
     }
     
   }) // end .then function
@@ -237,7 +244,14 @@ function getTMDbResponse(userInput) {
     
     // NOT SURE IF THERE IS A DRY WAY TO DO THIS?
     // create 2 divs for each poster to overlay the plot on hover
-    
+    // turn code into a function
+    // pass the function "tex1", "movieposter0"
+    // do this 3 more times with different variables
+    // var a = $("#moviePoster0")
+    // var b = "text1"
+    //     
+  
+
     //************//
     // POSTER ONE //
     //************//
@@ -246,7 +260,6 @@ function getTMDbResponse(userInput) {
     overlay.addClass("overlay");
     overlay.attr("id", "text1");
     $("#moviePoster0").append(overlay);
-    
     var text = $("<div>"); // create div text to hold the description
     text.addClass("text");
     text.text(movieResponse[0].overview);
