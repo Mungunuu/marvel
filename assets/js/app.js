@@ -132,6 +132,7 @@ function getMarvelResponse(characterName) {
   $.ajax({
     url: url,
     method: "GET",
+    // nameStartsWith instead of name
     data: { ts: ts, apikey: "3037032bf180053850405c0db9a5a3ce", hash: hash, name: characterName } //use data to pass attributes to query
   }).then(function (response) {
 
@@ -159,68 +160,8 @@ function getMarvelResponse(characterName) {
     var comicLink = (superHeroObject.urls).find(o => o.type === "comiclink").url; //array of urls from superhero uses find method to find comic link url
     var thumbnail = superHeroObject.thumbnail.path + "." + superHeroObject.thumbnail.extension; //image url
 
-    
-    $("#posterImage").empty(); // clear image div
-    $("#charInfo").empty(); // clear character info div
-    
-
-    // generates the h1 and hr elements each time and appends them to charInfo
-    var header1 = $("<h1>");
-    header1.text("Character Info");
-    header1.addClass("animated flipInX"); // animated.css
-    $("#charInfo").append(header1);
-
-    var hrDiv = $("<hr>");
-    hrDiv.addClass("hr-text");
-    hrDiv.attr("data-content", "//");
-    hrDiv.addClass("animated fadeIn"); // animated.css
-    $("#charInfo").append(hrDiv);
-
-    // Name
-    var charName = $("<p>");
-    charName.text("Name: " + superHeroObject.name);
-    charName.addClass("animated fadeIn"); // animated.css
-    $("#charInfo").append(charName);
-
-    // Description
-    var charDesc = $("<p>");
-
-    // if statement to handle any characters with no description
-    if (superHeroObject.description === "") {
-      charDesc.text("Description: No Available Description");
-      charDesc.addClass("animated fadeIn"); // animated.css
-      $("#charInfo").append(charDesc);
-    }
-    else {
-      charDesc.text("Description: " + superHeroObject.description);
-      charDesc.addClass("animated fadeIn"); // animated.css
-      $("#charInfo").append(charDesc);
-    }
-
-    // Number of available comics
-    var numComics = $("<p>");
-    numComics.text("# of Available Comics: " + superHeroObject.comics.available);
-    numComics.addClass("animated fadeInDown"); // animated.css
-    $("#charInfo").append(numComics);
-
-    // Link to Comics
-    var charComicLink = $("<p>");
-    charComicLink.text("Check some out here: ");
-    charComicLink.addClass("animated fadeInDown"); // animated.css
-    $(charComicLink).append('<a href=" ' + comicLink + ' " target="_blank">' + superHeroObject.name + ' Comics </a>');
-    $("#charInfo").append(charComicLink);
-
-    // Image
-    var charImage = $("<img>");
-    charImage.attr("src", thumbnail);
-    charImage.addClass("animated zoomIn"); // animated.css
-    $("#posterImage").append(charImage);
-
-
-    $("#charInfo").addClass("callout animated zoomIn"); // add classes to the div once the content is generated
-    $("#charInfo").css("background-color", "rgba(0, 0, 0, .7)"); // give styling to the div once content is generate
-    $("#hrDivider").css("visibility", "visible"); // makes the white divider visible rather then generating it each time
-
+    // call method to display divs
+    generateDivs(superHeroObject, thumbnail, comicLink);
   } // end else 
     
   }).then(function (response) {
@@ -253,36 +194,37 @@ function getTMDbResponse(userInput) {
     var movieResponse = response.results;
     console.log(movieResponse);
 
-    // if movieResponse.length == 0 {
+    // if (movieResponse.length == 0) {
     //   display div that says "no relevent films found"
     // }
-
+    // else {
+    // run the below for loop and display movies/posters
     // for loop to display the first 4 movie posters and plots returned
     for (var i = 0; i <= 3; i++) {
-
+      
       var posterURL = "https://image.tmdb.org/t/p/w500" + movieResponse[i].poster_path;
-
+      
       
       var newDiv = $("<div>"); // create a new div for each poster
       newDiv.attr("id", "moviePoster" + i);
       newDiv.addClass("large-3 medium-4 small-6 cell moviePoster animated zoomIn");
       $("#movieContent").append(newDiv);
-
+      
       
       var img = $("<img>"); // create the image element to display the poster
       img.attr("src", posterURL);
       $(newDiv).append(img);
-
+      
     } // end for loop
-
-
+    
+    
     // NOT SURE IF THERE IS A DRY WAY TO DO THIS?
     // create 2 divs for each poster to overlay the plot on hover
-
+    
     //************//
     // POSTER ONE //
     //************//
-
+    
     var overlay = $("<div>"); // create a div to hold the background
     overlay.addClass("overlay");
     overlay.attr("id", "text1");
@@ -292,11 +234,11 @@ function getTMDbResponse(userInput) {
     text.addClass("text");
     text.text(movieResponse[0].overview);
     $("#text1").append(text);
-
+    
     //************//
     // POSTER TWO //
     //************//  
-
+    
     var overlay = $("<div>");
     overlay.addClass("overlay");
     overlay.attr("id", "text2");
@@ -305,11 +247,11 @@ function getTMDbResponse(userInput) {
     text.addClass("text");
     text.text(movieResponse[1].overview);
     $("#text2").append(text);
-
+    
     //**************//
     // POSTER THREE //
     //**************//  
-
+    
     var overlay = $("<div>");
     overlay.addClass("overlay");
     overlay.attr("id", "text3");
@@ -318,11 +260,11 @@ function getTMDbResponse(userInput) {
     text.addClass("text");
     text.text(movieResponse[2].overview);
     $("#text3").append(text);
-
+    
     //*************//
     // POSTER FOUR //
     //*************//  
-
+    
     var overlay = $("<div>");
     overlay.addClass("overlay");
     overlay.attr("id", "text4");
@@ -331,6 +273,78 @@ function getTMDbResponse(userInput) {
     text.addClass("text");
     text.text(movieResponse[3].overview);
     $("#text4").append(text);
-
+    
+    // } // end else 
+    
   }); // end .then function
 }; // end getTMDbResponse function
+
+
+//***************************//
+// GENERATE CONTENT FOR DIVS //
+//***************************// 
+
+
+function generateDivs(superHeroObject, thumbnail, comicLink) {
+  $("#posterImage").empty(); // clear image div
+  $("#charInfo").empty(); // clear character info div
+  
+
+  // generates the h1 and hr elements each time and appends them to charInfo
+  var header1 = $("<h1>");
+  header1.text("Character Info");
+  header1.addClass("animated flipInX"); // animated.css
+  $("#charInfo").append(header1);
+
+  var hrDiv = $("<hr>");
+  hrDiv.addClass("hr-text");
+  hrDiv.attr("data-content", "//");
+  hrDiv.addClass("animated fadeIn"); // animated.css
+  $("#charInfo").append(hrDiv);
+
+  // Name
+  var charName = $("<p>");
+  charName.text("Name: " + superHeroObject.name);
+  charName.addClass("animated fadeIn"); // animated.css
+  $("#charInfo").append(charName);
+
+  // Description
+  var charDesc = $("<p>");
+
+  // if statement to handle any characters with no description
+  if (superHeroObject.description === "") {
+    charDesc.text("Description: No Available Description");
+    charDesc.addClass("animated fadeIn"); // animated.css
+    $("#charInfo").append(charDesc);
+  }
+  else {
+    charDesc.text("Description: " + superHeroObject.description);
+    charDesc.addClass("animated fadeIn"); // animated.css
+    $("#charInfo").append(charDesc);
+  }
+
+  // Number of available comics
+  var numComics = $("<p>");
+  numComics.text("# of Available Comics: " + superHeroObject.comics.available);
+  numComics.addClass("animated fadeInDown"); // animated.css
+  $("#charInfo").append(numComics);
+
+  // Link to Comics
+  var charComicLink = $("<p>");
+  charComicLink.text("Check some out here: ");
+  charComicLink.addClass("animated fadeInDown"); // animated.css
+  $(charComicLink).append('<a href=" ' + comicLink + ' " target="_blank">' + superHeroObject.name + ' Comics </a>');
+  $("#charInfo").append(charComicLink);
+
+  // Image
+  var charImage = $("<img>");
+  charImage.attr("src", thumbnail);
+  charImage.addClass("animated zoomIn"); // animated.css
+  $("#posterImage").append(charImage);
+
+
+  $("#charInfo").addClass("callout animated zoomIn"); // add classes to the div once the content is generated
+  $("#charInfo").css("background-color", "rgba(0, 0, 0, .7)"); // give styling to the div once content is generate
+  $("#hrDivider").css("visibility", "visible"); // makes the white divider visible rather then generating it each time
+
+};
