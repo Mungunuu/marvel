@@ -100,6 +100,7 @@ function getMarvelResponse(characterName) {
 
   $("#posterImage").empty();  // clear image div
   $("#charInfo").empty(); // clear character info div
+  $("movieContent").empty(); // clear the movieContent div
 
   //display loading gif/svg, they will display while the ajax call is retrieving the data
   var img = $("<img>");

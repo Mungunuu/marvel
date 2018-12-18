@@ -46,3 +46,10 @@ https://developers.themoviedb.org/3/search/search-movies
     3. display data in the order it is requested
 * putting recent searches into local storage
 * perhaps using the superhero api to get powerstats and character height/weight and display in the character info div
+
+#clearing divs
+1. clear the image, charInfo, poster divs
+2. run the getMarvelAPI function
+    - update content and display to user
+3. run the getTMDb api
+    - update all content and display to user
