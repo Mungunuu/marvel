@@ -44,12 +44,12 @@ https://developers.themoviedb.org/3/search/search-movies
         * we would send to the superhero api after to get powerstats, weight etc
     2. if user input is "correct" send to tmdb api and get movie responses
     3. display data in the order it is requested
+
+
+# TO DO
 * putting recent searches into local storage
 * perhaps using the superhero api to get powerstats and character height/weight and display in the character info div
-
-#clearing divs
-1. clear the image, charInfo, poster divs
-2. run the getMarvelAPI function
-    - update content and display to user
-3. run the getTMDb api
-    - update all content and display to user
+* "Wildcard" search (nameStartsWith)
+* Marvel API error catch (.catch())
+* if there is time tonight, try and refactor to the display poster code
+    - turn code into function and pass it variables for each generated poster
