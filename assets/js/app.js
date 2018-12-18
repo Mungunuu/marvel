@@ -185,11 +185,11 @@ function getMarvelResponse(characterName) {
     generateDivs(superHeroObject);
   } // end else 
     
-  }).then(function (response) {
+  }).then(function () {
     
     if (flag != 0 ) {
       // make sure we are passing the correct variable to ensure best film return results from tmdb
-      //getTMDbResponse(superHeroObject.name);
+      getTMDbResponse(superHeroObject.name);
     }
     
   }) // end .then function
