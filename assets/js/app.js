@@ -24,7 +24,7 @@ $("#submit-button").on("click", function (event) {
 
   updateSearches(input); // call a function to update the searches array for each input
   getMarvelResponse(input); // call the getMarvelResponse function and pass it the input
-  getTMDbResponse(input); // call the getTMDb function and pass it the input
+  // getTMDbResponse(input); // call the getTMDb function and pass it the input
 
   $("#user-input").val(''); // remove the users input from the form box
 }); // end on.click function
@@ -121,6 +121,8 @@ function getMarvelResponse(characterName) {
   var url = 'https://cors-anywhere.herokuapp.com/http://gateway.marvel.com:80/v1/public/characters';
 
 
+
+
   //********************************************//
   // calling the marvel api and displaying data //
   //********************************************//
@@ -204,7 +206,12 @@ function getMarvelResponse(characterName) {
     $("#hrDivider").css("visibility", "visible"); // makes the white divider visible rather then generating it each time
 
 
-  }) // end .then function
+  }).then(function (response) {
+  
+     getTMDbResponse(superHeroObject.name);
+  
+   }) // end .then function
+  
 }; // end getMarvelResponse
 
 
