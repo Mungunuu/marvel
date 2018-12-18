@@ -24,6 +24,10 @@ $("#submit-button").on("click", function (event) {
 
   updateSearches(input); // call a function to update the searches array for each input
   getMarvelResponse(input); // call the getMarvelResponse function and pass it the input
+  $("#movieContent").empty();
+  $("#charInfo").removeClass("callout"); // add classes to the div once the content is generated
+  $("#charInfo").css("background-color", "rgba(0, 0, 0, 0)"); // give styling to the div once content is generate
+
   // getTMDbResponse(input); // call the getTMDb function and pass it the input
 
   $("#user-input").val(''); // remove the users input from the form box
