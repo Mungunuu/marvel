@@ -102,7 +102,7 @@ function getMarvelResponse(characterName) {
   $("#charInfo").empty(); // clear character info div
   $("movieContent").empty(); // clear the movieContent div
 
-  //display loading gif/svg, they will display while the ajax call is retrieving the data
+  // //display loading gif/svg, they will display while the ajax call is retrieving the data
   var img = $("<img>");
   img.attr("src", "assets/images/loading.svg");
   img.addClass("imgLoad");
@@ -120,7 +120,7 @@ function getMarvelResponse(characterName) {
   var hash = CryptoJS.MD5(ts + "64db9fdab53906ac65de6ccadc60239d59f68cc1" + "3037032bf180053850405c0db9a5a3ce").toString();
   var superHeroObject;
   var url = 'https://cors-anywhere.herokuapp.com/http://gateway.marvel.com:80/v1/public/characters';
-
+  var flag = 0;
 
 
 
@@ -135,11 +135,26 @@ function getMarvelResponse(characterName) {
     data: { ts: ts, apikey: "3037032bf180053850405c0db9a5a3ce", hash: hash, name: characterName } //use data to pass attributes to query
   }).then(function (response) {
 
-    superHeroObject = response.data.results[0];  // dril down into data to get superhero object
+    flag = response.data.count;
 
-    // ***** BELOW IS IMPORANT, NEED TO ACCOUNT FOR THIS ******
-    // create err0r handling for if superHeroObject is undefined: misspellings, non-marvel characters, incorrect usage (antman???)
-    // return the function, display an error message?
+    if (flag == 0) {
+      alert("no results found");
+      // GENERATE VALID CONTENT FOR THIS ERROR
+
+      // display superhero notfound object
+      // superheronotfound = {
+      //   name: Not found,
+      //   Description: not found,
+      //   thumbnail: src = "notfound.img",
+      //   comic: unavailable
+      // }
+
+      // clear all divs except recent searches
+    }
+    else {
+
+    superHeroObject = response.data.results[0];  // dril down into data to get superhero object
+    console.log(response);
 
     var comicLink = (superHeroObject.urls).find(o => o.type === "comiclink").url; //array of urls from superhero uses find method to find comic link url
     var thumbnail = superHeroObject.thumbnail.path + "." + superHeroObject.thumbnail.extension; //image url
@@ -206,12 +221,15 @@ function getMarvelResponse(characterName) {
     $("#charInfo").css("background-color", "rgba(0, 0, 0, .7)"); // give styling to the div once content is generate
     $("#hrDivider").css("visibility", "visible"); // makes the white divider visible rather then generating it each time
 
-
+  } // end else 
+    
   }).then(function (response) {
-  
-     getTMDbResponse(superHeroObject.name);
-  
-   }) // end .then function
+    
+    if (flag != 0 ) {
+      getTMDbResponse(superHeroObject.name);
+    }
+    
+  }) // end .then function
   
 }; // end getMarvelResponse
 
@@ -234,6 +252,10 @@ function getTMDbResponse(userInput) {
   }).then(function (response) {
     var movieResponse = response.results;
     console.log(movieResponse);
+
+    // if movieResponse.length == 0 {
+    //   display div that says "no relevent films found"
+    // }
 
     // for loop to display the first 4 movie posters and plots returned
     for (var i = 0; i <= 3; i++) {
