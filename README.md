@@ -12,7 +12,6 @@ https://developer.marvel.com/docs#!/public/getCreatorCollection_get_0
 
 # TMDB API
 https://developers.themoviedb.org/3/search/search-movies
-* API key: 2abf67ce944d23e52af2559a5b7e6668
 * grab 4 poster images
 * grab movie plots and display as overlay to the poster images
 
