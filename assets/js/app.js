@@ -142,6 +142,24 @@ function getMarvelResponse(characterName) {
       alert("no results found");
       // GENERATE VALID CONTENT FOR THIS ERROR
 
+      // do another ajax, use nameStartsWith instead of nam
+      
+      /******** PATRICK CODING EVERYTHING IN THIS ELSE IF  */
+      // if results = 1 {
+        // set superHeroObject = response.results
+        //generateDivs(superHeroObject);
+    // }
+
+    //******** PATRICK CODING EVERYTHING IN THIS ELSE IF  */
+      // else if results > 1 {
+        // display clickable div with list of results/choices
+        // once user clicks choice, 
+        // set var = to user choice
+        //generateDivs(superHeroObject);
+      // }
+
+      /******** KIRTHI CODING EVERYTHING IN THIS ELSE IF  */
+      // else {
       // display superhero notfound object
       // superheronotfound = {
       //   name: Not found,
@@ -157,11 +175,8 @@ function getMarvelResponse(characterName) {
     superHeroObject = response.data.results[0];  // dril down into data to get superhero object
     console.log(response);
 
-    var comicLink = (superHeroObject.urls).find(o => o.type === "comiclink").url; //array of urls from superhero uses find method to find comic link url
-    var thumbnail = superHeroObject.thumbnail.path + "." + superHeroObject.thumbnail.extension; //image url
-
     // call method to display divs
-    generateDivs(superHeroObject, thumbnail, comicLink);
+    generateDivs(superHeroObject);
   } // end else 
     
   }).then(function (response) {
@@ -171,6 +186,8 @@ function getMarvelResponse(characterName) {
     }
     
   }) // end .then function
+
+  //**********PATRICK ADD A CATCH ERROR STATEMENT .CATCH()********//
   
 }; // end getMarvelResponse
 
@@ -285,7 +302,11 @@ function getTMDbResponse(userInput) {
 //***************************// 
 
 
-function generateDivs(superHeroObject, thumbnail, comicLink) {
+function generateDivs(superHeroObject) {
+
+  var comicLink = (superHeroObject.urls).find(o => o.type === "comiclink").url; //array of urls from superhero uses find method to find comic link url
+  var thumbnail = superHeroObject.thumbnail.path + "." + superHeroObject.thumbnail.extension; //image url
+
   $("#posterImage").empty(); // clear image div
   $("#charInfo").empty(); // clear character info div
   
