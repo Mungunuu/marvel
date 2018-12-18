@@ -31,7 +31,7 @@ https://developers.themoviedb.org/3/search/search-movies
 
 **JS FOLDER**
 * app.js is OUR personal file to run all of our scripts
-* i am not 100% sure what the files inside the VENDOR folder do or what they are for but I am leaving them alone in case they affect how our page runs since we are using this framework
+* i am not 100% sure what the files inside the VENDOR folder do or what they are for but I am leaving them alone in case they affect how our page runs since they were provided with the foundation framework
 
 # THINGS TO WORK ON
 **IMPORTANT**
