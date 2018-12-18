@@ -19,7 +19,7 @@ https://developers.themoviedb.org/3/search/search-movies
 
 **.HTML**
 * index.html is the main page where all of our content will be generated
-* DO NOT CHANGE THIS FILE
+* please be very careful when editing, classes and ids are all sensitive to the foundation framework as well as javascript & jquery scripts
 
 **CSS FOLDER**
 * app.css is OUR personal stylesheet that will override any built in foundation styles (given they are correctly applied)
