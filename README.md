@@ -27,7 +27,7 @@ https://developers.themoviedb.org/3/search/search-movies
 * foundation.min.css is a minimalized version of the .css file, i have not used it and am leaving it there in case any styles are being pulled from it
 
 # IMAGES FOLDER
-* only image it holds is our background image
+* holds our background image and loading gif/svg
 
 # JS FOLDER
 * app.js is OUR personal file to run all of our scripts

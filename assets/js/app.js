@@ -27,40 +27,44 @@ $("#submit-button").on("click", function (event) {
   $("#user-input").val('');
 }); // end on.click function
 
+
 // function to update recent searches array
 function updateSearches(newSearch) {
-  // empty the div
-  $("#recentSearches").empty();
-  $("#recentSearches").addClass("callout");
-  $("#recentSearches").css("background-color", "rgba(0, 0, 0, .7)");
+    // empty the div
+    $("#recentSearches").empty();
+    
+    // generate header content
+    var header1 = $("<h4>");
+    header1.text("Most Recent Searches");
+    header1.addClass("animated flipInX");
+    $("#recentSearches").append(header1);
 
+    var hrDiv = $("<hr>");
+    hrDiv.addClass("hr-text");
+    hrDiv.attr("data-content", "//");
+    hrDiv.addClass("animated fadeIn");
+    $("#recentSearches").append(hrDiv);
 
-  // generate header content
-  var header1 = $("<h4>");
-  header1.text("Most Recent Searches");
-  $("#recentSearches").append(header1);
+    // generate div for the list items
+    var listDiv = $("<div>");
+    listDiv.attr("id", "listItems");
+    listDiv.addClass("animated fadeIn");
+    $("#recentSearches").append(listDiv);
 
-  var hrDiv = $("<hr>");
-  hrDiv.addClass("hr-text");
-  hrDiv.attr("data-content", "//");
-  $("#recentSearches").append(hrDiv);
+    $("#recentSearches").addClass("callout animated zoomIn");
+    $("#recentSearches").css("background-color", "rgba(0, 0, 0, .7)");
 
-  // generate div for the list items
-  var listDiv = $("<div>");
-  listDiv.attr("id", "listItems");
-  $("#recentSearches").append(listDiv);
-
-  // check the length of recentSearches array. if it is equal to 5 then we splice
-  if (recentSearches.length == 5) {
-    recentSearches.splice(0, 1); // remove index[0]
-    recentSearches.push(newSearch); // push newest input (length returns to 5)
-    displayRecentSearches(recentSearches);
-  }
-  else {
-    recentSearches.push(newSearch);
-    displayRecentSearches(recentSearches);
-  }
-};
+    // check the length of recentSearches array. if it is equal to 5 then we splice
+    if (recentSearches.length == 5) {
+      recentSearches.splice(0, 1); // remove index[0]
+      recentSearches.push(newSearch); // push newest input (length returns to 5)
+      displayRecentSearches(recentSearches);
+    }
+    else {
+      recentSearches.push(newSearch);
+      displayRecentSearches(recentSearches);
+    }
+  };
 
 // function to display recent searches
 function displayRecentSearches(searchArray) {
@@ -69,6 +73,7 @@ function displayRecentSearches(searchArray) {
     // create list item
     var listItem = $("<p>");
     listItem.text(num + '. ' + searchArray[i]);
+    listItem.addClass("animated fadeIn");
     $("#listItems").prepend(listItem);
     // console.log(listItem);
     num--;
@@ -88,7 +93,7 @@ function getMarvelResponse(characterName) {
 
   var img1 = $("<img>");
   img1.attr("src", "assets/images/loading.svg");
-  img1.addClass("imgLoad");
+  img1.addClass("imgLoad loadChar");
 
   $("#posterImage").append(img);
   $("#charInfo").append(img1);
@@ -124,22 +129,23 @@ function getMarvelResponse(characterName) {
     // clear character info div
     $("#charInfo").empty();
     // adds the outline/background once content is ready to be put inside div
-    $("#charInfo").addClass("callout");
-    $("#charInfo").css("background-color", "rgba(0, 0, 0, .7)");
 
     // this code generates the h1 and hr elements each time and appends them to charInfo
     var header1 = $("<h1>");
     header1.text("Character Info");
+    header1.addClass("animated flipInX");
     $("#charInfo").append(header1);
 
     var hrDiv = $("<hr>");
     hrDiv.addClass("hr-text");
     hrDiv.attr("data-content", "//");
+    hrDiv.addClass("animated fadeIn");
     $("#charInfo").append(hrDiv);
 
     // Name
     var charName = $("<p>");
     charName.text("Name: " + superHeroObject.name);
+    charName.addClass("animated fadeIn");
     $("#charInfo").append(charName);
 
     // Description
@@ -147,28 +153,36 @@ function getMarvelResponse(characterName) {
     // if statement to handle any characters with no description
     if (superHeroObject.description === "") {
       charDesc.text("Description: No Available Description");
+      charDesc.addClass("animated fadeIn");
       $("#charInfo").append(charDesc);
     }
     else {
       charDesc.text("Description: " + superHeroObject.description);
+      charDesc.addClass("animated fadeIn");
       $("#charInfo").append(charDesc);
     }
 
     // Number of available comics
     var numComics = $("<p>");
     numComics.text("# of Available Comics: " + superHeroObject.comics.available);
+    numComics.addClass("animated fadeInDown");
     $("#charInfo").append(numComics);
 
     // Link to Comics
     var charComicLink = $("<p>");
     charComicLink.text("Check some out here: ");
+    charComicLink.addClass("animated fadeInDown");
     $(charComicLink).append('<a href=" ' + comicLink + ' " target="_blank">' + superHeroObject.name + ' Comics </a>');
     $("#charInfo").append(charComicLink);
 
     // Image
     var charImage = $("<img>");
     charImage.attr("src", thumbnail);
+    charImage.addClass("animated zoomIn");
     $("#posterImage").append(charImage);
+
+    $("#charInfo").addClass("callout animated zoomIn");
+    $("#charInfo").css("background-color", "rgba(0, 0, 0, .7)");
 
     $("#hrDivider").css("visibility", "visible");
 
@@ -187,17 +201,17 @@ function getTMBdResponse(userInput) {
     method: "GET"
   }).then(function (response) {
     var movieResponse = response.results;
-    // console.log(movieResponse);
-    
+    console.log(movieResponse);
 
-    for (var i = 0; i<=3; i++) {
 
-      posterURL = "https://image.tmdb.org/t/p/w500" +movieResponse[i].poster_path;
+    for (var i = 0; i <= 3; i++) {
+
+      posterURL = "https://image.tmdb.org/t/p/w500" + movieResponse[i].poster_path;
 
       // create a new div for each image
       var newDiv = $("<div>");
       newDiv.attr("id", "moviePoster" + i);
-      newDiv.addClass("large-3 medium-4 small-6 cell moviePoster");
+      newDiv.addClass("large-3 medium-4 small-6 cell moviePoster animated zoomIn");
       $("#movieContent").append(newDiv);
 
       // create the image element to display the poster
