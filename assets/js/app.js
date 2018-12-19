@@ -1,13 +1,13 @@
-// array to hold the 5 most recent searches
 
+// determine if there is anything in local storage
 if (JSON.parse(localStorage.getItem("recentSearches")) == null) {
+  // if not, initalize recentSeaches Array
   var recentSearches = [];
-  console.log("Empty array" + recentSearches);
-
 }
+
 else {
+  // if there is content in local storage set the array equal to the local storage value
   var recentSearches = JSON.parse(localStorage.getItem("recentSearches"));
-  console.log(recentSearches);
 }
 
 
@@ -325,7 +325,6 @@ function getTMDbResponse(userInput) {
 
 
 
-
 //***************************//
 // GENERATE CONTENT FOR DIVS //
 //***************************// 
@@ -399,8 +398,6 @@ function generateHeroDivs(superHeroObject) {
 };
 
 
-
-
 //*******************************//
 // GENERATE NO SUPERHERO CONTENT //
 //*******************************// 
@@ -457,8 +454,9 @@ function noSuperHero() {
 
 }
 
-
-// FUNCTION TO SEARCH FOR NAME STARTS WITH// BROADER SEARCH 
+//**********************************************************//
+// FUNCTION TO SEARCH FOR NAME STARTS WITH (BROADER SEARCH) //
+//**********************************************************// 
 
 function startWithSearch(characterName, ts, apikey, hash, url)  //############
 {
