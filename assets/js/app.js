@@ -209,28 +209,30 @@ function startWithSearch(characterName, ts, apikey, hash, url)  //############
     else if (results.length > 1) {
       //create clickable div for modal for each result
 
+      var choiceDiv = $("<div>");
+      choiceDiv.addClass("modalDiv");
+
       for (var i = 0; i < results.length; i++) {
 
-        var choiceDiv = $("<div>");
         var p = $("<p>").text(results[i].name);
+        console.log(p);
 
         p.attr("data-name-1", results[i]);
         p.addClass("clickModal");
-        console.log(p);
 
-        $("choiceDiv").append(p);
-        $("choicesModal").append(choiceDiv);
-        // console.log(choiceDiv)
-
+        $(".modalDiv").append(p);
+        $("#choicesModal").append(choiceDiv);
 
       }
-      alert(results[0].name + "  " + results[1].name + "   " + results[2].name)
+
+
+      // alert(results[0].name + "  " + results[1].name + "   " + results[2].name)
       flag2 = 0;
       var popup = new Foundation.Reveal($('#choicesModal'));
       popup.open();
       // console.log(popup)
 
-      noSuperHero();
+      // noSuperHero();
 
       // generateHeroDivs($(this).attr("data-name-1"))  //this is superhero object    ########
 
@@ -397,6 +399,12 @@ function getTMDbResponse(userInput) {
 }; // end getTMDbResponse function
 
 
+function generateDivs() //##########
+{
+ generateHeroDivs( $(this).attr("data-name-1") )  //this is superhero object    ########
+}
+
+
 
 //***************************//
 // GENERATE CONTENT FOR DIVS //
@@ -529,4 +537,4 @@ function noSuperHero() {
 
 
 
-$(document).on("click", ".clickModal", generateHeroDivs);
+$(document).on("click", ".clickModal", generateDivs);
