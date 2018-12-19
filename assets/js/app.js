@@ -1,5 +1,15 @@
 // array to hold the 5 most recent searches
-var recentSearches = [];
+
+ if (JSON.parse(localStorage.getItem("recentSearches")) == null) {
+  var recentSearches = [];
+  console.log("Empty array" + recentSearches);
+  
+ }
+ else {
+  var recentSearches = JSON.parse(localStorage.getItem("recentSearches"));
+  console.log(recentSearches);
+ }
+
 // this array is for me to log the charcter names that have the best results
 var marvelSearches = ["Wolverine", "Spider-Man", "Iron Man", "Thor", "Hulk", "Iron Man", "Black Widow", "Captain America", "Guardians of the Galaxy", "Vision", "Black Panther"];
 // this array is just for me to put  issues we should try to account for
@@ -68,12 +78,18 @@ function updateSearches(newSearch) {
   if (recentSearches.length == 5) {
     recentSearches.splice(0, 1); // splice ( remove recentSearches[0], remove only 1 element )
     recentSearches.push(newSearch); // push newest user input (length returns to 5)
+    console.log(recentSearches)
+    localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
     displayRecentSearches(recentSearches); // call a function to display the user input
   }
   else {
     recentSearches.push(newSearch); // push newest user input into recentSearches array
+    localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
+    console.log(recentSearches)
     displayRecentSearches(recentSearches); // call a function to display the user input
   }
+
+  
 };
 
 
@@ -83,11 +99,17 @@ function updateSearches(newSearch) {
 // function to display recent searches //
 //*************************************//
 
+// need to fix error when user refreshes page and puts in a new search, the entire array is overriden
+// instead of displaying the searchArray which will be reset to empty on each refresh, generate the list soley fron local storage
+
 function displayRecentSearches(searchArray) {
+
+  var object = JSON.parse(localStorage.getItem("recentSearches"));
+  
   var num = searchArray.length; // since we want to display most recent first, we count down the list number, as we loop through the array
   for (var i = 0; i < searchArray.length; i++) {
     var listItem = $("<p>"); // create list item
-    listItem.text(num + '. ' + searchArray[i]);
+    listItem.text(num + '. ' + (object[i]));
     listItem.addClass("animated fadeIn"); // animated.css
     $("#listItems").prepend(listItem); // prepending assures that the newer searches are display at the top of the list
     num--;
