@@ -1,14 +1,14 @@
 // array to hold the 5 most recent searches
 
- if (JSON.parse(localStorage.getItem("recentSearches")) == null) {
+if (JSON.parse(localStorage.getItem("recentSearches")) == null) {
   var recentSearches = [];
   console.log("Empty array" + recentSearches);
-  
- }
- else {
+
+}
+else {
   var recentSearches = JSON.parse(localStorage.getItem("recentSearches"));
   console.log(recentSearches);
- }
+}
 
 
 // this array is for me to log the charcter names that have the best results
@@ -90,7 +90,7 @@ function updateSearches(newSearch) {
     displayRecentSearches(recentSearches); // call a function to display the user input
   }
 
-  
+
 };
 
 
@@ -106,7 +106,7 @@ function updateSearches(newSearch) {
 function displayRecentSearches(searchArray) {
 
   var object = JSON.parse(localStorage.getItem("recentSearches"));
-  
+
   var num = searchArray.length; // since we want to display most recent first, we count down the list number, as we loop through the array
   for (var i = 0; i < searchArray.length; i++) {
     var listItem = $("<p>"); // create list item
@@ -148,7 +148,8 @@ function getMarvelResponse(characterName) {
   var superHeroObject;
   var url = 'https://cors-anywhere.herokuapp.com/http://gateway.marvel.com:80/v1/public/characters';
   var flag = 0;
-  var apikey="3037032bf180053850405c0db9a5a3ce";
+  var flag2 = 0;
+  var apikey = "3037032bf180053850405c0db9a5a3ce";
 
 
 
@@ -166,50 +167,20 @@ function getMarvelResponse(characterName) {
 
     flag = response.data.count;
 
+    if (flag == 1) {
+      superHeroObject = response.data.results[0];   // dril down into data to get superhero object
+      generateHeroDivs(superHeroObject);                // call method to display divs
+    } // end else
+
+  }).then(function (response) {
+    //###########
+    // GENERATE VALID CONTENT FOR THIS ERROR
     if (flag == 0) {
-      alert("no results found");
-      // GENERATE VALID CONTENT FOR THIS ERROR
-
-      // do another ajax, use nameStartsWith instead of nam
-
-      /******** PATRICK CODING EVERYTHING IN THIS ELSE IF  */
-      // if results = 1 {
-      // set superHeroObject = response.results
-
-      // make sure we are passing the correct variable to ensure best film return results from tmdb
-      //getTMDbResponse(superHeroObject.name);
-      //generateHeroDivs(superHeroObject);
-      // }
-
-      //******** PATRICK CODING EVERYTHING IN THIS ELSE IF  */
-      // else if results > 1 {
-      // display clickable div with list of results/choices
-      // once user clicks choice, 
-      // set var = to user choice
-
-      // make sure we are passing the correct variable to ensure best film return results from tmdb
-      //getTMDbResponse(superHeroObject.name);
-      //generateHeroDivs(superHeroObject);
-      // }
-
-      /******** KIRTHI CODING EVERYTHING IN THIS ELSE IF  */
-      // else {
-      noSuperHero(); // call a function to display information if no response is found by marvel api   
-      getTMDbResponse(characterName); // check if there are movies for user input
-      // }
-
-      // clear all divs except recent searches
+      alert("no results found, do broader search");
+      startWithSearch(characterName, ts, apikey, hash, url); // do another ajax, use nameStartsWith instead of name
     }
-    else {
-
-      superHeroObject = response.data.results[0];  // dril down into data to get superhero object
-      console.log(response);
-
-      // call method to display divs
-      generateHeroDivs(superHeroObject);
-    } // end else 
-
-  }).then(function () {
+    //############
+  }).then(function (response) {
 
     if (flag != 0) {
       // make sure we are passing the correct variable to ensure best film return results from tmdb
@@ -217,6 +188,7 @@ function getMarvelResponse(characterName) {
     }
 
   }) // end .then function
+
 
   //**********PATRICK ADD A CATCH ERROR STATEMENT .CATCH()********//
 
@@ -484,3 +456,82 @@ function noSuperHero() {
 
 
 }
+
+
+// FUNCTION TO SEARCH FOR NAME STARTS WITH// BROADER SEARCH 
+
+function startWithSearch(characterName, ts, apikey, hash, url)  //############
+{
+$.ajax({
+   url: url,
+   method: "GET",
+   // nameStartsWith instead of name
+   data: { ts: ts, apikey: apikey, hash: hash, nameStartsWith: characterName } //use data to pass attributes to query
+ }).then(function (response) {
+
+   var results = response.data.results;
+   /******** PATRICK CODING EVERYTHING IN THIS ELSE IF  */
+   if ( results.length == 1) {
+     superHeroObject =  results[0];
+     // make sure we are passing the correct variable to ensure best film return results from tmdb
+     getTMDbResponse(superHeroObject.name);
+     generateHeroDivs(superHeroObject);
+     flag2 = 0;
+   }
+   //******** PATRICK CODING EVERYTHING IN THIS ELSE IF  */
+   else if ( results.length > 1 ) {
+       //create clickable div for modal for each result
+
+       $("xtest").empty();
+       for (var i=0; i < results.length ; i++) {
+
+         var choiceDiv = $("<div>");
+
+         var p = $("<p>").text( results[i].name );
+         p.attr("data-name-1", results[i]);
+         $("choiceDiv").append(p);
+         p.addClass("clickModal");
+         $("choicesModal").append(choiceDiv);
+        // console.log(choiceDiv)
+
+
+       }
+       alert(results[0].name +"  " + results[1].name + "   " +results[2].name )
+       flag2 = 0;
+       var popup = new Foundation.Reveal($('#choicesModal'));
+       popup.open() ;
+       // console.log(popup)
+
+     }
+   else{
+     alert("no results found");
+     flag2 = 1;
+      
+     noSuperHero();
+
+     var newDiv1 = $("<div>"); // create a new div 
+      newDiv1.addClass("large-3 medium-3 small-3 cell ");
+      $("#movieContent").append(newDiv1);
+
+      var newDiv = $("<div>"); // create a new div 
+      newDiv.attr("id", "noMovies");
+      newDiv.addClass("large-6 medium-6 small-6 cell animated zoomIn");
+      $("#movieContent").append(newDiv);
+
+      var newDiv2 = $("<div>"); // create a new div 
+      newDiv2.addClass("large-3 medium-3 small-3 cell");
+      $("#movieContent").append(newDiv2);
+
+      var text = $("<p>");
+      text.attr('id', "noMovieText");
+      text.text("NO MOVIES FOUND");
+      $(newDiv).append(text);
+
+   }
+
+     
+   });
+
+};
+
+$(document).on("click", ".clickModal", generateHeroDivs);
