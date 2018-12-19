@@ -154,7 +154,7 @@ function getMarvelResponse(characterName) {
 
       // make sure we are passing the correct variable to ensure best film return results from tmdb
       //getTMDbResponse(superHeroObject.name);
-      //generateDivs(superHeroObject);
+      //generateHeroDivs(superHeroObject);
       // }
 
       //******** PATRICK CODING EVERYTHING IN THIS ELSE IF  */
@@ -165,7 +165,7 @@ function getMarvelResponse(characterName) {
 
       // make sure we are passing the correct variable to ensure best film return results from tmdb
       //getTMDbResponse(superHeroObject.name);
-      //generateDivs(superHeroObject);
+      //generateHeroDivs(superHeroObject);
       // }
 
       /******** KIRTHI CODING EVERYTHING IN THIS ELSE IF  */
@@ -182,7 +182,7 @@ function getMarvelResponse(characterName) {
       console.log(response);
 
       // call method to display divs
-      generateDivs(superHeroObject);
+      generateHeroDivs(superHeroObject);
     } // end else 
 
   }).then(function () {
@@ -334,7 +334,7 @@ function getTMDbResponse(userInput) {
 // GENERATE CONTENT FOR DIVS //
 //***************************// 
 
-function generateDivs(superHeroObject) {
+function generateHeroDivs(superHeroObject) {
 
   var comicLink = (superHeroObject.urls).find(o => o.type === "comiclink").url; //array of urls from superhero uses find method to find comic link url
   var thumbnail = superHeroObject.thumbnail.path + "." + superHeroObject.thumbnail.extension; //image url
@@ -392,7 +392,7 @@ function generateDivs(superHeroObject) {
   // Image
   var charImage = $("<img>");
   charImage.attr("src", thumbnail);
-  charImage.addClass("animated bounceIn"); // animated.css
+  charImage.addClass("animated fadeInLeft"); // animated.css
   $("#posterImage").append(charImage);
 
 
