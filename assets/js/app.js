@@ -10,6 +10,7 @@
   console.log(recentSearches);
  }
 
+
 // this array is for me to log the charcter names that have the best results
 var marvelSearches = ["Wolverine", "Spider-Man", "Iron Man", "Thor", "Hulk", "Iron Man", "Black Widow", "Captain America", "Guardians of the Galaxy", "Vision", "Black Panther"];
 // this array is just for me to put  issues we should try to account for
@@ -147,6 +148,7 @@ function getMarvelResponse(characterName) {
   var superHeroObject;
   var url = 'https://cors-anywhere.herokuapp.com/http://gateway.marvel.com:80/v1/public/characters';
   var flag = 0;
+  var apikey="3037032bf180053850405c0db9a5a3ce";
 
 
 
@@ -159,7 +161,7 @@ function getMarvelResponse(characterName) {
     url: url,
     method: "GET",
     // nameStartsWith instead of name
-    data: { ts: ts, apikey: "3037032bf180053850405c0db9a5a3ce", hash: hash, name: characterName } //use data to pass attributes to query
+    data: { ts: ts, apikey: apikey, hash: hash, name: characterName } //use data to pass attributes to query
   }).then(function (response) {
 
     flag = response.data.count;
