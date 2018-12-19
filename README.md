@@ -43,7 +43,7 @@ https://developers.themoviedb.org/3/search/search-movies
 * fix the modal so that it will display the response from the startWithSearch ajax call. 
 * make the responses clickable so that whichever one the user picks, it will then call both the generateHeroDivs function and getTMBdResponse based on whichever item the user clicked
 
-# TO DO
+**TO DO**
 * perhaps using the superhero api to get powerstats and character height/weight and display in the character info div
 * Marvel API error catch (.catch())
 * if there is time, try and refactor to the display poster code
