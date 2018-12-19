@@ -38,18 +38,8 @@ https://developers.themoviedb.org/3/search/search-movies
 * the Marvel API uses http:// while GitHub uses https:// 
     * Jared provided solution, look at the Marvel ajax URL, we are routing our request through a "middle-man" heroku who will add the required 's' to our URL and allow the content to work on GitHub
     
-**LESS IMPORTANT**   
-* figure out .then() function so that we can execute the functions and display data in a specific order
-    1. send userinput to marvel api and do error checking
-        * we would send to the superhero api after to get powerstats, weight etc
-    2. if user input is "correct" send to tmdb api and get movie responses
-    3. display data in the order it is requested
-
-
 # TO DO
-* putting recent searches into local storage
 * perhaps using the superhero api to get powerstats and character height/weight and display in the character info div
-* "Wildcard" search (nameStartsWith)
 * Marvel API error catch (.catch())
-* if there is time tonight, try and refactor to the display poster code
+* if there is time, try and refactor to the display poster code
     - turn code into function and pass it variables for each generated poster
