@@ -1,6 +1,6 @@
 $(document).ready(function (){
 
-
+var superHeroProxy;
 //*************************************************//
 // DETERMINE IF THERE IS ANYTHING IN LOCAL STORAGE //
 //*************************************************//
@@ -220,6 +220,7 @@ function startWithSearch(characterName, ts, apikey, hash, url)  //############
 
       var firstChoice = $("<p>");
       firstChoice.text(results[0].name);
+      firstChoice.attr("data-name-1", results[0]);
       firstChoice.addClass("clickModal")
 
       $("#choicesModal").prepend(firstChoice);
@@ -230,7 +231,7 @@ function startWithSearch(characterName, ts, apikey, hash, url)  //############
         var p = $("<p>")
         p.text(results[i].name);
         console.log(results[i].name);
-
+  
         p.attr("data-name-1", results[i]);
         p.addClass("clickModal");
 
