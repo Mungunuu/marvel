@@ -164,7 +164,7 @@ function getMarvelResponse(characterName) {
     //###########
     // GENERATE VALID CONTENT FOR THIS ERROR
     if (flag == 0) {
-      alert("no results found, do broader search");
+      alert("no results found, doing broader search");
       startWithSearch(characterName, ts, apikey, hash, url); // do another ajax, use nameStartsWith instead of name
     }
     //############
@@ -469,15 +469,16 @@ function startWithSearch(characterName, ts, apikey, hash, url)  //############
     else if (results.length > 1) {
       //create clickable div for modal for each result
 
-      $("xtest").empty();
       for (var i = 0; i < results.length; i++) {
 
         var choiceDiv = $("<div>");
-
         var p = $("<p>").text(results[i].name);
+
         p.attr("data-name-1", results[i]);
-        $("choiceDiv").append(p);
         p.addClass("clickModal");
+        console.log(p);
+
+        $("choiceDiv").append(p);
         $("choicesModal").append(choiceDiv);
         // console.log(choiceDiv)
 
@@ -489,7 +490,9 @@ function startWithSearch(characterName, ts, apikey, hash, url)  //############
       popup.open();
       // console.log(popup)
 
-      generateHeroDivs($(this).attr("data-name-1"))  //this is superhero object    ########
+      noSuperHero();
+
+      // generateHeroDivs($(this).attr("data-name-1"))  //this is superhero object    ########
 
     } // end else if
 
