@@ -33,7 +33,7 @@ https://developers.themoviedb.org/3/search/search-movies
 * app.js is OUR personal file to run all of our scripts
 * i am not 100% sure what the files inside the VENDOR folder do or what they are for but I am leaving them alone in case they affect how our page runs since they were provided with the foundation framework
 
-**NOTE**
+#NOTE
 * the Marvel API uses http:// while GitHub uses https:// 
     * Jared provided solution, look at the Marvel ajax URL, we are routing our request through a "middle-man" heroku who will add the required 's' to our URL and allow the content to work on GitHub
 
