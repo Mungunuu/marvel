@@ -1,3 +1,6 @@
+$(document).ready(function (){
+
+
 //*************************************************//
 // DETERMINE IF THERE IS ANYTHING IN LOCAL STORAGE //
 //*************************************************//
@@ -196,8 +199,10 @@ function startWithSearch(characterName, ts, apikey, hash, url)  //############
   }).then(function (response) {
 
     var results = response.data.results;
+    console.log(results.length);
+
     /******** PATRICK CODING EVERYTHING IN THIS ELSE IF  */
-    if (results.length == 1) {
+    if (Object.keys(results) === 1) {
       superHeroObject = results[0];
       // make sure we are passing the correct variable to ensure best film return results from tmdb
       getTMDbResponse(superHeroObject.name);
@@ -208,14 +213,23 @@ function startWithSearch(characterName, ts, apikey, hash, url)  //############
     //******** PATRICK CODING EVERYTHING IN THIS ELSE IF  */
     else if (results.length > 1) {
       //create clickable div for modal for each result
+      $("#choicesModal").empty();
 
       var choiceDiv = $("<div>");
       choiceDiv.addClass("modalDiv");
 
-      for (var i = 0; i < results.length; i++) {
+      var firstChoice = $("<p>");
+      firstChoice.text(results[0].name);
+      firstChoice.addClass("clickModal")
 
-        var p = $("<p>").text(results[i].name);
-        console.log(p);
+      $("#choicesModal").prepend(firstChoice);
+      
+      console.log(results)
+      for (var i = 0; i < results.length; i++) {
+        
+        var p = $("<p>")
+        p.text(results[i].name);
+        console.log(results[i].name);
 
         p.attr("data-name-1", results[i]);
         p.addClass("clickModal");
@@ -232,9 +246,7 @@ function startWithSearch(characterName, ts, apikey, hash, url)  //############
       popup.open();
       // console.log(popup)
 
-      // noSuperHero();
-
-      // generateHeroDivs($(this).attr("data-name-1"))  //this is superhero object    ########
+      noSuperHero();
 
     } // end else if
 
@@ -269,6 +281,7 @@ function startWithSearch(characterName, ts, apikey, hash, url)  //############
   }); // end .then function
 
 }; // end startsWithSearch
+
 
 
 
@@ -399,8 +412,15 @@ function getTMDbResponse(userInput) {
 }; // end getTMDbResponse function
 
 
-function generateDivs() //##########
+
+
+//*******************************************************************//
+// FUNCTION TO CALL HERO DIV FUNCTION WITH SELECTED ATTRIBUTE OBJECT //
+//*******************************************************************//
+
+function generateDivs() 
 {
+  alert("you clicked a choice");
  generateHeroDivs( $(this).attr("data-name-1") )  //this is superhero object    ########
 }
 
@@ -538,3 +558,5 @@ function noSuperHero() {
 
 
 $(document).on("click", ".clickModal", generateDivs);
+
+}); // end document.ready

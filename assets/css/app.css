@@ -191,6 +191,11 @@ img {
 .callout > :last-child {
     margin-bottom: 16px;
 }
+
+#testDiv {
+    border: solid 2px red;
+    color: white;
+}
   
 /* DO NOT CHANGE */
 .footer, .push {

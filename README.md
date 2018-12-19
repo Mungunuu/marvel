@@ -40,7 +40,7 @@ https://developers.themoviedb.org/3/search/search-movies
 
 # THINGS TO WORK ON
 **IMPORTANT**
-* fix the modal so that it will display the response from the startWithSearch ajax call. 
+* fix the modal so that it will display ALL of the responses from the second marvel ajax call
 * make the responses clickable so that whichever one the user picks, it will then call both the generateHeroDivs function and getTMBdResponse based on whichever item the user clicked
 
 **TO DO**
