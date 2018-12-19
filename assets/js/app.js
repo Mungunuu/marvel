@@ -11,15 +11,6 @@ else {
 }
 
 
-// this array is for me to log the charcter names that have the best results
-var marvelSearches = ["Wolverine", "Spider-Man", "Iron Man", "Thor", "Hulk", "Iron Man", "Black Widow", "Captain America", "Guardians of the Galaxy", "Vision", "Black Panther"];
-// this array is just for me to put  issues we should try to account for
-var marvelIssues = [{
-  Vision: "returns character info and poster from marvel, movies are completely unrelated",
-  Antman: "cannot for the life of me figure out how to search for this character and pull any marvel info"
-
-}];
-
 
 //*************************************************//
 // FUNCTION TO PICK UP USER INPUT FROM SEARCH FORM //
@@ -99,9 +90,6 @@ function updateSearches(newSearch) {
 //*************************************//
 // function to display recent searches //
 //*************************************//
-
-// need to fix error when user refreshes page and puts in a new search, the entire array is overriden
-// instead of displaying the searchArray which will be reset to empty on each refresh, generate the list soley fron local storage
 
 function displayRecentSearches(searchArray) {
 
@@ -460,54 +448,58 @@ function noSuperHero() {
 
 function startWithSearch(characterName, ts, apikey, hash, url)  //############
 {
-$.ajax({
-   url: url,
-   method: "GET",
-   // nameStartsWith instead of name
-   data: { ts: ts, apikey: apikey, hash: hash, nameStartsWith: characterName } //use data to pass attributes to query
- }).then(function (response) {
+  $.ajax({
+    url: url,
+    method: "GET",
+    // nameStartsWith instead of name
+    data: { ts: ts, apikey: apikey, hash: hash, nameStartsWith: characterName } //use data to pass attributes to query
+  }).then(function (response) {
 
-   var results = response.data.results;
-   /******** PATRICK CODING EVERYTHING IN THIS ELSE IF  */
-   if ( results.length == 1) {
-     superHeroObject =  results[0];
-     // make sure we are passing the correct variable to ensure best film return results from tmdb
-     getTMDbResponse(superHeroObject.name);
-     generateHeroDivs(superHeroObject);
-     flag2 = 0;
-   }
-   //******** PATRICK CODING EVERYTHING IN THIS ELSE IF  */
-   else if ( results.length > 1 ) {
-       //create clickable div for modal for each result
+    var results = response.data.results;
+    /******** PATRICK CODING EVERYTHING IN THIS ELSE IF  */
+    if (results.length == 1) {
+      superHeroObject = results[0];
+      // make sure we are passing the correct variable to ensure best film return results from tmdb
+      getTMDbResponse(superHeroObject.name);
+      generateHeroDivs(superHeroObject);
+      flag2 = 0;
+    } // end if
 
-       $("xtest").empty();
-       for (var i=0; i < results.length ; i++) {
+    //******** PATRICK CODING EVERYTHING IN THIS ELSE IF  */
+    else if (results.length > 1) {
+      //create clickable div for modal for each result
 
-         var choiceDiv = $("<div>");
+      $("xtest").empty();
+      for (var i = 0; i < results.length; i++) {
 
-         var p = $("<p>").text( results[i].name );
-         p.attr("data-name-1", results[i]);
-         $("choiceDiv").append(p);
-         p.addClass("clickModal");
-         $("choicesModal").append(choiceDiv);
+        var choiceDiv = $("<div>");
+
+        var p = $("<p>").text(results[i].name);
+        p.attr("data-name-1", results[i]);
+        $("choiceDiv").append(p);
+        p.addClass("clickModal");
+        $("choicesModal").append(choiceDiv);
         // console.log(choiceDiv)
 
 
-       }
-       alert(results[0].name +"  " + results[1].name + "   " +results[2].name )
-       flag2 = 0;
-       var popup = new Foundation.Reveal($('#choicesModal'));
-       popup.open() ;
-       // console.log(popup)
+      }
+      alert(results[0].name + "  " + results[1].name + "   " + results[2].name)
+      flag2 = 0;
+      var popup = new Foundation.Reveal($('#choicesModal'));
+      popup.open();
+      // console.log(popup)
 
-     }
-   else{
-     alert("no results found");
-     flag2 = 1;
-      
-     noSuperHero();
+      generateHeroDivs($(this).attr("data-name-1"))  //this is superhero object    ########
 
-     var newDiv1 = $("<div>"); // create a new div 
+    } // end else if
+
+    else {
+      alert("no results found");
+      flag2 = 1;
+
+      noSuperHero();
+
+      var newDiv1 = $("<div>"); // create a new div 
       newDiv1.addClass("large-3 medium-3 small-3 cell ");
       $("#movieContent").append(newDiv1);
 
@@ -525,11 +517,12 @@ $.ajax({
       text.text("NO MOVIES FOUND");
       $(newDiv).append(text);
 
-   }
+    }// end else
 
-     
-   });
 
-};
+
+  }); // end .then function
+
+}; // end startsWithSearch
 
 $(document).on("click", ".clickModal", generateHeroDivs);
