@@ -1,4 +1,6 @@
-$(document).ready(function (){
+
+
+$(document).foundation();
 
 var superHeroProxy;
 //*************************************************//
@@ -214,41 +216,30 @@ function startWithSearch(characterName, ts, apikey, hash, url)  //############
     else if (results.length > 1) {
       //create clickable div for modal for each result
       $("#choicesModal").empty();
+      $('#choicesModal').append('<button class="close-button" data-close aria-label="Close reveal" type="button"><span aria-hidden="true">&times;</span></button>')
 
       var choiceDiv = $("<div>");
       choiceDiv.addClass("modalDiv");
 
       var firstChoice = $("<p>");
       firstChoice.text(results[0].name);
-      firstChoice.attr("data-name-1", results[0]);
+      firstChoice.attr('data-key1', JSON.stringify(results[0]));
       firstChoice.addClass("clickModal")
 
       $("#choicesModal").prepend(firstChoice);
-      
-      console.log(results)
-      for (var i = 0; i < results.length; i++) {
-        
-        var p = $("<p>")
-        p.text(results[i].name);
-        console.log(results[i].name);
-  
-        p.attr("data-name-1", results[i]);
-        p.addClass("clickModal");
 
-        $(".modalDiv").append(p);
+
+      for (var i = 0; i < results.length; i++) {
+
+        var p = $("<p>").text(results[i].name);
+        p.attr('data-key1', JSON.stringify(results[i]));
+        p.addClass("clickModal");
+        $(".modalDiv").append(p);   // . for class append by class
         $("#choicesModal").append(choiceDiv);
 
       }
-
-
-      // alert(results[0].name + "  " + results[1].name + "   " + results[2].name)
       flag2 = 0;
-      var popup = new Foundation.Reveal($('#choicesModal'));
-      popup.open();
-      // console.log(popup)
-
-      noSuperHero();
-
+      $('#choicesModal').foundation('open');
     } // end else if
 
     else {
@@ -419,10 +410,15 @@ function getTMDbResponse(userInput) {
 // FUNCTION TO CALL HERO DIV FUNCTION WITH SELECTED ATTRIBUTE OBJECT //
 //*******************************************************************//
 
-function generateDivs() 
+function generateDivs() //##########
 {
-  alert("you clicked a choice");
- generateHeroDivs( $(this).attr("data-name-1") )  //this is superhero object    ########
+ var superHeroObject = JSON.parse($(this).attr('data-key1'));
+ console.log(superHeroObject);
+ generateHeroDivs(superHeroObject);
+ $('#choicesModal').foundation('close');
+ getTMDbResponse(superHeroObject.name.replace(/\([^()]*\)/g, ''));   //##############
+console.log(superHeroObject.name.replace(/\([^()]*\)/g, ''));
+
 }
 
 
@@ -559,5 +555,3 @@ function noSuperHero() {
 
 
 $(document).on("click", ".clickModal", generateDivs);
-
-}); // end document.ready
