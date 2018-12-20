@@ -45,6 +45,16 @@ main {
     margin-right: 4.5rem;
 }
 
+h3 {
+    text-decoration: underline;
+}
+
+.clickModal:hover {
+    color: red;
+    font-style: italic;
+    /* text-decoration: underline overline; */
+}
+
 #submit-button {
     color: white;
     background-color: black;
@@ -118,7 +128,7 @@ main {
 }
 
 #recentSearches p {
-    font-size: 1.25em;
+    font-size: 1.15em;
 }
 
 #hrDivider {

@@ -1,5 +1,3 @@
-
-
 $(document).foundation();
 
 var superHeroProxy;
@@ -43,6 +41,8 @@ $("#submit-button").on("click", function (event) {
 
 
 
+
+
 //******************************************//
 // FUNCTION TO UPDATE RECENT SEARCHES ARRAY // 
 //******************************************//
@@ -72,15 +72,25 @@ function updateSearches(newSearch) {
   $("#recentSearches").css("background-color", "rgba(0, 0, 0, .7)"); // give styling to the div once content is generate
 
   // check the length of recentSearches array. if it is equal to 5, then we splice
+  var a_p;
+  var date = new Date();
+  var hour = date.getHours();
+
+  if (hour < 12) {
+    a_p = "AM";
+  }
+  else {
+    a_p = "PM"
+  }
   if (recentSearches.length == 5) {
     recentSearches.splice(0, 1); // splice ( remove recentSearches[0], remove only 1 element )
-    recentSearches.push(newSearch); // push newest user input (length returns to 5)
+    recentSearches.push(newSearch + ": " + ((date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear() + " (" + date.getHours() + ":" + date.getMinutes() + a_p + ")")); // push newest user input (length returns to 5)
     console.log(recentSearches)
     localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
     displayRecentSearches(recentSearches); // call a function to display the user input
   }
   else {
-    recentSearches.push(newSearch); // push newest user input into recentSearches array
+    recentSearches.push(newSearch + ": " + ((date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear() + " (" + date.getHours() + ":" + date.getMinutes() + a_p + ")")); // push newest user input (length returns to 5)
     localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
     console.log(recentSearches)
     displayRecentSearches(recentSearches); // call a function to display the user input
@@ -88,6 +98,9 @@ function updateSearches(newSearch) {
 
 
 };
+
+
+
 
 
 //*************************************//
@@ -101,12 +114,17 @@ function displayRecentSearches(searchArray) {
   var num = searchArray.length; // since we want to display most recent first, we count down the list number, as we loop through the array
   for (var i = 0; i < searchArray.length; i++) {
     var listItem = $("<p>"); // create list item
+
+    // console.log(timeStamp);
     listItem.text(num + '. ' + (object[i]));
     listItem.addClass("animated fadeIn"); // animated.css
     $("#listItems").prepend(listItem); // prepending assures that the newer searches are display at the top of the list
     num--;
   }
 };
+
+
+
 
 
 
@@ -157,26 +175,30 @@ function getMarvelResponse(characterName) {
   }).then(function (response) {
 
     flag = response.data.count;
+    console.log(response);
 
-    if (flag == 1) {
+    if (flag > 0) {
       superHeroObject = response.data.results[0];   // dril down into data to get superhero object
       generateHeroDivs(superHeroObject);                // call method to display divs
+      getTMDbResponse(superHeroObject.name);
     } // end else
 
   }).then(function (response) {
     //###########
     // GENERATE VALID CONTENT FOR THIS ERROR
     if (flag == 0) {
-      alert("no results found, doing broader search");
+      // alert("no results found, doing broader search");
       startWithSearch(characterName, ts, apikey, hash, url); // do another ajax, use nameStartsWith instead of name
     }
     //############
-  }).then(function (response) {
+    // }).then(function (response) {
 
-    if (flag != 0) {
-      // make sure we are passing the correct variable to ensure best film return results from tmdb
-      getTMDbResponse(superHeroObject.name);
-    }
+    // if (flag != 0) {
+    //   console.log(response.data);
+    //   superHeroObject = response.data.results[0];   // dril down into data to get superhero object
+    //   // make sure we are passing the correct variable to ensure best film return results from tmdb
+    //   
+    // }
 
   }) // end .then function
 
@@ -184,6 +206,9 @@ function getMarvelResponse(characterName) {
   //**********PATRICK ADD A CATCH ERROR STATEMENT .CATCH()********//
 
 }; // end getMarvelResponse
+
+
+
 
 
 
@@ -215,23 +240,30 @@ function startWithSearch(characterName, ts, apikey, hash, url)  //############
     //******** PATRICK CODING EVERYTHING IN THIS ELSE IF  */
     else if (results.length > 1) {
       //create clickable div for modal for each result
+
+
       $("#choicesModal").empty();
-      $('#choicesModal').append('<button class="close-button" data-close aria-label="Close reveal" type="button"><span aria-hidden="true">&times;</span></button>')
+      $('#choicesModal').append('<button class="close-button" data-close aria-label="Close reveal" type="button"><span aria-hidden="true">&times;</span></button>');
+
 
       var choiceDiv = $("<div>");
       choiceDiv.addClass("modalDiv");
 
       var firstChoice = $("<p>");
-      firstChoice.text(results[0].name);
+      firstChoice.text("○ "+ results[0].name);
       firstChoice.attr('data-key1', JSON.stringify(results[0]));
-      firstChoice.addClass("clickModal")
+      firstChoice.addClass("clickModal");
 
       $("#choicesModal").prepend(firstChoice);
+
+      var header1 = $("<h3>").text("Please select from the below options:");
+      $("#choicesModal").prepend(header1);
+
 
 
       for (var i = 0; i < results.length; i++) {
 
-        var p = $("<p>").text(results[i].name);
+        var p = $("<p>").text("○ "+ results[i].name);
         p.attr('data-key1', JSON.stringify(results[i]));
         p.addClass("clickModal");
         $(".modalDiv").append(p);   // . for class append by class
@@ -239,40 +271,31 @@ function startWithSearch(characterName, ts, apikey, hash, url)  //############
 
       }
       flag2 = 0;
+      
       $('#choicesModal').foundation('open');
+      
+      $("#posterImage").empty(); // clear image div
+      $("#charInfo").empty(); // clear character info div
+      
     } // end else if
-
+    
     else {
       alert("no results found");
       flag2 = 1;
-
+      
       noSuperHero();
-
-      var newDiv1 = $("<div>"); // create a new div 
-      newDiv1.addClass("large-3 medium-3 small-3 cell ");
-      $("#movieContent").append(newDiv1);
-
-      var newDiv = $("<div>"); // create a new div 
-      newDiv.attr("id", "noMovies");
-      newDiv.addClass("large-6 medium-6 small-6 cell animated zoomIn");
-      $("#movieContent").append(newDiv);
-
-      var newDiv2 = $("<div>"); // create a new div 
-      newDiv2.addClass("large-3 medium-3 small-3 cell");
-      $("#movieContent").append(newDiv2);
-
-      var text = $("<p>");
-      text.attr('id', "noMovieText");
-      text.text("NO MOVIES FOUND");
-      $(newDiv).append(text);
-
+      noMovieContent();
+      
     }// end else
-
-
-
+    
+    
+    
   }); // end .then function
-
+  
 }; // end startsWithSearch
+
+
+
 
 
 
@@ -282,60 +305,48 @@ function startWithSearch(characterName, ts, apikey, hash, url)  //############
 //***********************************//
 
 function getTMDbResponse(userInput) {
-
+  
   $("#movieContent").empty(); // clear the div 
   var movie = userInput;
   var queryURL = "https://api.themoviedb.org/3/search/movie?api_key=2abf67ce944d23e52af2559a5b7e6668&query=" + movie
-
+  
   $.ajax({
     url: queryURL,
     method: "GET"
   }).then(function (response) {
     var movieResponse = response.results;
     console.log(movieResponse);
-
+    
     if (movieResponse.length == 0) {
-
-      var newDiv1 = $("<div>"); // create a new div 
-      newDiv1.addClass("large-3 medium-3 small-3 cell ");
-      $("#movieContent").append(newDiv1);
-
-      var newDiv = $("<div>"); // create a new div 
-      newDiv.attr("id", "noMovies");
-      newDiv.addClass("large-6 medium-6 small-6 cell animated zoomIn");
-      $("#movieContent").append(newDiv);
-
-      var newDiv2 = $("<div>"); // create a new div 
-      newDiv2.addClass("large-3 medium-3 small-3 cell");
-      $("#movieContent").append(newDiv2);
-
-      var text = $("<p>");
-      text.attr('id', "noMovieText");
-      text.text("NO MOVIES FOUND");
-      $(newDiv).append(text);
-
+      
+      noMovieContent();
+      
     }
-
+    
     else {
       // run the below for loop and display movies/posters
       // for loop to display the first 4 movie posters and plots returned
       for (var i = 0; i <= 3; i++) {
-
+        
         var posterURL = "https://image.tmdb.org/t/p/w500" + movieResponse[i].poster_path;
-
-
+        
+        if (movieResponse[i].poster_path === null) {
+          posterURL = "assets/images/not-found.png"
+        }
+        
+        
         var newDiv = $("<div>"); // create a new div for each poster
         newDiv.attr("id", "moviePoster" + i);
         newDiv.addClass("large-3 medium-4 small-6 cell moviePoster animated zoomIn");
         $("#movieContent").append(newDiv);
-
-
+        
+        
         var img = $("<img>"); // create the image element to display the poster
         img.attr("src", posterURL);
         $(newDiv).append(img);
-
+        
       } // end for loop
-
+      
       // NOT SURE IF THERE IS A DRY WAY TO DO THIS?
       // create 2 divs for each poster to overlay the plot on hover
       // turn code into a function
@@ -344,12 +355,12 @@ function getTMDbResponse(userInput) {
       // var a = $("#moviePoster0")
       // var b = "text1"
       //     
-
-
+      
+      
       //************//
       // POSTER ONE //
       //************//
-
+      
       var overlay = $("<div>"); // create a div to hold the background
       overlay.addClass("overlay");
       overlay.attr("id", "text1");
@@ -358,11 +369,11 @@ function getTMDbResponse(userInput) {
       text.addClass("text");
       text.text(movieResponse[0].overview);
       $("#text1").append(text);
-
+      
       //************//
       // POSTER TWO //
       //************//  
-
+      
       var overlay = $("<div>");
       overlay.addClass("overlay");
       overlay.attr("id", "text2");
@@ -371,11 +382,11 @@ function getTMDbResponse(userInput) {
       text.addClass("text");
       text.text(movieResponse[1].overview);
       $("#text2").append(text);
-
+      
       //**************//
       // POSTER THREE //
       //**************//  
-
+      
       var overlay = $("<div>");
       overlay.addClass("overlay");
       overlay.attr("id", "text3");
@@ -384,11 +395,11 @@ function getTMDbResponse(userInput) {
       text.addClass("text");
       text.text(movieResponse[2].overview);
       $("#text3").append(text);
-
+      
       //*************//
       // POSTER FOUR //
       //*************//  
-
+      
       var overlay = $("<div>");
       overlay.addClass("overlay");
       overlay.attr("id", "text4");
@@ -397,11 +408,14 @@ function getTMDbResponse(userInput) {
       text.addClass("text");
       text.text(movieResponse[3].overview);
       $("#text4").append(text);
-
+      
     } // end else 
-
+    
   }); // end .then function
 }; // end getTMDbResponse function
+
+
+
 
 
 
@@ -410,53 +424,60 @@ function getTMDbResponse(userInput) {
 // FUNCTION TO CALL HERO DIV FUNCTION WITH SELECTED ATTRIBUTE OBJECT //
 //*******************************************************************//
 
-function generateDivs() //##########
+function generateDivs() 
 {
- var superHeroObject = JSON.parse($(this).attr('data-key1'));
- console.log(superHeroObject);
- generateHeroDivs(superHeroObject);
- $('#choicesModal').foundation('close');
- getTMDbResponse(superHeroObject.name.replace(/\([^()]*\)/g, ''));   //##############
-console.log(superHeroObject.name.replace(/\([^()]*\)/g, ''));
 
+  // evaluate the value inside od "data-key1", if it is an object send it to generateHeroDivs and getTMDbResponse
+  // if it is null or undefined, call on the noSuperHero and noMovieContentDiv
+
+  var superHeroObject = JSON.parse($(this).attr('data-key1'));
+  // console.log(superHeroObject);
+  generateHeroDivs(superHeroObject);
+  $('#choicesModal').foundation('close');
+  getTMDbResponse(superHeroObject.name.replace(/\([^()]*\)/g, ''));   
+  // console.log(superHeroObject.name.replace(/\([^()]*\)/g, ''));
+  
 }
 
 
 
-//***************************//
-// GENERATE CONTENT FOR DIVS //
-//***************************// 
+
+
+
+//*************************************************//
+// FUNCTION TO GENERATE SUPERHERO CONTENT FOR DIVS //
+//*************************************************//
 
 function generateHeroDivs(superHeroObject) {
-
+  
   var comicLink = (superHeroObject.urls).find(o => o.type === "comiclink").url; //array of urls from superhero uses find method to find comic link url
   var thumbnail = superHeroObject.thumbnail.path + "." + superHeroObject.thumbnail.extension; //image url
-
+  
   $("#posterImage").empty(); // clear image div
   $("#charInfo").empty(); // clear character info div
-
-
+  
+  
   // generates the h1 and hr elements each time and appends them to charInfo
   var header1 = $("<h1>");
   header1.text("Character Info");
   header1.addClass("animated flipInX"); // animated.css
   $("#charInfo").append(header1);
-
+  
   var hrDiv = $("<hr>");
   hrDiv.addClass("hr-text");
   hrDiv.attr("data-content", "//");
   hrDiv.addClass("animated fadeIn"); // animated.css
   $("#charInfo").append(hrDiv);
-
+  
   // Name
   var charName = $("<p>");
   charName.text("Name: " + superHeroObject.name);
   charName.addClass("animated fadeIn"); // animated.css
   $("#charInfo").append(charName);
-
+  
   // Description
   var charDesc = $("<p>");
-
+  
   // if statement to handle any characters with no description
   if (superHeroObject.description === "") {
     charDesc.text("Description: No Available Description");
@@ -468,90 +489,131 @@ function generateHeroDivs(superHeroObject) {
     charDesc.addClass("animated fadeIn"); // animated.css
     $("#charInfo").append(charDesc);
   }
-
+  
   // Number of available comics
   var numComics = $("<p>");
   numComics.text("# of Available Comics: " + superHeroObject.comics.available);
   numComics.addClass("animated fadeInDown"); // animated.css
   $("#charInfo").append(numComics);
-
+  
   // Link to Comics
   var charComicLink = $("<p>");
   charComicLink.text("Check some out here: ");
   charComicLink.addClass("animated fadeInDown"); // animated.css
   $(charComicLink).append('<a href=" ' + comicLink + ' " target="_blank">' + superHeroObject.name + ' Comics </a>');
   $("#charInfo").append(charComicLink);
-
+  
   // Image
   var charImage = $("<img>");
   charImage.attr("src", thumbnail);
   charImage.addClass("animated fadeInLeft"); // animated.css
   $("#posterImage").append(charImage);
-
-
+  
+  
   $("#charInfo").addClass("callout animated zoomIn"); // add classes to the div once the content is generated
   $("#charInfo").css("background-color", "rgba(0, 0, 0, .7)"); // give styling to the div once content is generate
   $("#hrDivider").css("visibility", "visible"); // makes the white divider visible rather then generating it each time
-
+  
 };
 
 
-//*******************************//
-// GENERATE NO SUPERHERO CONTENT //
-//*******************************// 
+
+
+
+
+//*******************************************//
+// FUNCTION TO GENERATE NO SUPERHERO CONTENT //
+//*******************************************// 
 
 function noSuperHero() {
-
+  
   var thumbnail = "assets/images/not-found.png";
-
+  
   // clear the divs of any content
   $("#posterImage").empty(); // clear image div
   $("#charInfo").empty(); // clear character info div
-
+  
   // generates the h1 and hr elements each time and appends them to charInfo
   var header1 = $("<h1>");
   header1.text("Character Info");
   header1.addClass("animated flipInX"); // animated.css
   $("#charInfo").append(header1);
-
+  
   var hrDiv = $("<hr>");
   hrDiv.addClass("hr-text");
   hrDiv.attr("data-content", "//");
   hrDiv.addClass("animated fadeIn"); // animated.css
   $("#charInfo").append(hrDiv);
-
+  
   // Name
   var charName = $("<p>");
   charName.text("Name: No Available Name");
   charName.addClass("animated fadeIn"); // animated.css
   $("#charInfo").append(charName);
-
+  
   // Description
   var charDesc = $("<p>");
   charDesc.text("Description: No Available Description");
   charDesc.addClass("animated fadeIn"); // animated.css
   $("#charInfo").append(charDesc);
-
-
+  
+  
   // Number of available comics
   var numComics = $("<p>");
   numComics.text("# of Available Comics: No Comics Found");
   numComics.addClass("animated fadeInDown"); // animated.css
   $("#charInfo").append(numComics);
-
+  
   // Image
   var charImage = $("<img>");
   charImage.attr("src", thumbnail);
   charImage.addClass("animated zoomIn"); // animated.css
   $("#posterImage").append(charImage);
-
+  
   $("#charInfo").addClass("callout animated zoomIn"); // add classes to the div once the content is generated
   $("#charInfo").css("background-color", "rgba(0, 0, 0, .7)"); // give styling to the div once content is generate
   $("#hrDivider").css("visibility", "visible"); // makes the white divider visible rather then generating it each time
-
-
+  
+  
 }
 
 
 
+
+//*******************************//
+// FUNCTION TO DISPLAY NO MOVIES //
+//*******************************//
+
+function noMovieContent() {
+  
+  var newDiv1 = $("<div>"); // create a new div 
+  newDiv1.addClass("large-3 medium-3 small-3 cell ");
+  $("#movieContent").append(newDiv1);
+  
+  var newDiv = $("<div>"); // create a new div 
+  newDiv.attr("id", "noMovies");
+  newDiv.addClass("large-6 medium-6 small-6 cell animated zoomIn");
+  $("#movieContent").append(newDiv);
+  
+  var newDiv2 = $("<div>"); // create a new div 
+  newDiv2.addClass("large-3 medium-3 small-3 cell");
+  $("#movieContent").append(newDiv2);
+  
+  var text = $("<p>");
+  text.attr('id', "noMovieText");
+  text.text("NO MOVIES FOUND");
+  $(newDiv).append(text);
+}
+
+
+
+
+
 $(document).on("click", ".clickModal", generateDivs);
+
+
+// $('#choicesModal').on('closed.zf.reveal', function () {
+//   var modal = $(this);
+//   console.log(this);
+//   alert('closed');
+// });
