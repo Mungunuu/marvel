@@ -8,6 +8,7 @@ var superHeroProxy;
 if (JSON.parse(localStorage.getItem("recentSearches")) == null) {
   // if not, initalize recentSeaches Array
   var recentSearches = [];
+
 }
 else {
   // if there is content in local storage set the array equal to the local storage value
@@ -71,26 +72,40 @@ function updateSearches(newSearch) {
   $("#recentSearches").addClass("callout animated zoomIn"); // add classes to the div once the content is generated
   $("#recentSearches").css("background-color", "rgba(0, 0, 0, .7)"); // give styling to the div once content is generate
 
-  // check the length of recentSearches array. if it is equal to 5, then we splice
+  // set variables for date 
   var a_p;
   var date = new Date();
+  var month = date.getMonth();
+  var day = date.getDate();
+  var year = date.getFullYear();
   var hour = date.getHours();
+  var minutes = date.getMinutes();
+
+
 
   if (hour < 12) {
     a_p = "AM";
   }
-  else {
+  
+  if (hour >= 13 && hour <= 24) {
+  
+    hour -= 12;
     a_p = "PM"
+
+    // console.log(13 <= hour <= 14);
+    // console.log(hour);
   }
+
+  // check the length of recentSearches array. if it is equal to 5, then we splice
   if (recentSearches.length == 5) {
     recentSearches.splice(0, 1); // splice ( remove recentSearches[0], remove only 1 element )
-    recentSearches.push(newSearch + ": " + ((date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear() + " (" + date.getHours() + ":" + date.getMinutes() + a_p + ")")); // push newest user input (length returns to 5)
+    recentSearches.push(newSearch + ": " + ((month + 1) + "/" + day + "/" + year + " (" + hour + ":" + minutes + a_p + ")")); // push newest user input (length returns to 5)
     console.log(recentSearches)
     localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
     displayRecentSearches(recentSearches); // call a function to display the user input
   }
   else {
-    recentSearches.push(newSearch + ": " + ((date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear() + " (" + date.getHours() + ":" + date.getMinutes() + a_p + ")")); // push newest user input (length returns to 5)
+    recentSearches.push(newSearch + ": " + ((month + 1) + "/" + day + "/" + year + " (" + hour + ":" + minutes + a_p + ")")); // push newest user input (length returns to 5)
     localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
     console.log(recentSearches)
     displayRecentSearches(recentSearches); // call a function to display the user input
@@ -280,7 +295,7 @@ function startWithSearch(characterName, ts, apikey, hash, url)  //############
     } // end else if
     
     else {
-      alert("no results found");
+      // alert("no results found");
       flag2 = 1;
       
       noSuperHero();

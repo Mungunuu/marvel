@@ -137,8 +137,8 @@ h3 {
 }
 
 #noMovies {
-    background-color: black;
-    box-shadow: 0px 0px 15px 10px rgb(0, 0, 0); 
+    background-color: rgb(0, 0, 0, .5);
+    box-shadow: 0px 0px 20px 15px rgb(0, 0, 0, .5);
 }
 
 #noMovieText {
