@@ -38,13 +38,4 @@ https://developers.themoviedb.org/3/search/search-movies
     * Jared provided solution, look at the Marvel ajax URL, we are routing our request through a "middle-man" heroku who will add the required 's' to our URL and allow the content to work on GitHub
 
 
-# THINGS TO WORK ON
-**IMPORTANT**
-* fix the modal so that it will display ALL of the responses from the second marvel ajax call
-* make the responses clickable so that whichever one the user picks, it will then call both the generateHeroDivs function and getTMBdResponse based on whichever item the user clicked
 
-**TO DO**
-* perhaps using the superhero api to get powerstats and character height/weight and display in the character info div
-* Marvel API error catch (.catch())
-* if there is time, try and refactor to the display poster code
-    - turn code into function and pass it variables for each generated poster
