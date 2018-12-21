@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en" dir="ltr">
-
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,7 +12,6 @@
     <link rel="stylesheet" href="./assets/css/foundation.css">
     <link rel="stylesheet" href="./assets/css/app.css">
 </head>
-
 <body>
     <main class="wrapper">
         <div class="navigation">
@@ -31,62 +29,45 @@
                 <!-- </div> end class=top-bar-right -->
             </div> <!-- end class=top-bar, id=responsive-menu -->
         </div> <!-- end class=navigation -->
-
-
         <!-- all generated content goes in this div -->
         <div class="pageContent">
-
             <!-- grid section 12, will hold poster, character info and 5 recent searches -->
             <!-- NOTE: the "callout" class makes the cell visable in the html, can be removed to only show cell content -->
             <div class="grid-x grid-padding-x large-12 medium-12 cell contentContainer">
-
                 <!-- grid section 3, will have poster/image -->
                 <div id="posterImage" class="large-3 medium-3 small-3 cell">
                     <!-- The container where the poster/image will be generated -->
                 </div>
-
                 <!-- grid section 6, will have character information -->
                 <div id="charInfo" class="large-6 medium-6 small-6 cell">
                     <!-- all of the character information + headers will be generated once the user has entered input -->
                 </div>
-
                 <!-- grid section 3, will have 5 most recent searches -->
                 <div class="large-3 medium-3 small-3 cell">
                     <div id="recentSearches">
                         <!-- contains list of users most recent searches -->
                     </div>
                 </div>
-
             </div> <!-- end class=grid-x grid-padding-x large-12 medium-12 cell (callout) -->
-
             <!-- this is the modal ##### -->
-            <div class="reveal" id="choicesModal" data-reveal></div>
-            <div class="reveal" id="welcomeModal" data-reveal>
-
+            <div class="reveal" id="choicesModal" data-reveal>
+                
+            </div>
             <hr id="hrDivider">
-
             <!-- we can put movie poster + plot here from tmdb api -->
             <div class="grid-x grid-padding-x large-12 medium-12 cell" id="movieContent">
-
             </div>
-
         </div> <!-- end class=pageContent -->
-
         <!-- DO NOT DELETE: this class is necessary for the footer to be sticky -->
         <div class="push"></div>
-
     </main>
-
     <footer class="footer" id="sticky">
         &copy; 2018
     </footer>
-
     <!-- links to javascript -->
     <script src="./assets/js/vendor/jquery.js"></script>
     <script src="./assets/js/vendor/foundation.min.js"></script>
     <script src="./assets/js/vendor/foundation.js"></script>
     <script src="./assets/js/app.js"></script>
-
 </body>
-
 </html>
